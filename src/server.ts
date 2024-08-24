@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import cors from "cors";
 import db from "./config/config";
 import routes from './routes/index'; 
+import './models/index';
 
 class Server {
   private async dbConnection() {
