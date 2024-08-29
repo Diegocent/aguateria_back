@@ -25,7 +25,7 @@ Cliente.init({
     allowNull: false
   },
   cedula: {
-    type: DataTypes.STRING(7),
+    type: DataTypes.STRING(10),
     allowNull: false,
     unique: true
   },

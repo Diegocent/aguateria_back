@@ -1,13 +1,18 @@
 import { Router } from 'express';
+import {
+    crearConsumo,
+    obtenerConsumos,
+    obtenerConsumoPorId,
+    actualizarConsumo,
+    eliminarConsumo
+} from '../controllers/consumo.controller';
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  res.send('Listado de consumos');
-});
-
-router.post('/', (req, res) => {
-  res.send('Registrar un nuevo consumo');
-});
+router.post('/crear', crearConsumo);
+router.get('/', obtenerConsumos);
+router.get('/:id', obtenerConsumoPorId);
+router.put('/:id', actualizarConsumo);
+router.delete('/:id', eliminarConsumo);
 
 export default router;

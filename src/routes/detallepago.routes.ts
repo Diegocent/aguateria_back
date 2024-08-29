@@ -1,13 +1,18 @@
 import { Router } from 'express';
+import {
+    crearDetallePago,
+    obtenerDetallesPago,
+    obtenerDetallePagoPorId,
+    actualizarDetallePago,
+    eliminarDetallePago
+} from '../controllers/detallepago.controller';
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  res.send('Listado de detalles de pagos');
-});
-
-router.post('/', (req, res) => {
-  res.send('Registrar un nuevo detalle de pago');
-});
+router.post('/crear', crearDetallePago);
+router.get('/', obtenerDetallesPago);
+router.get('/:id', obtenerDetallePagoPorId);
+router.put('/:id', actualizarDetallePago);
+router.delete('/:id', eliminarDetallePago);
 
 export default router;

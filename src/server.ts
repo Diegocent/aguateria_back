@@ -1,21 +1,10 @@
-import express, { Application } from "express";
+import express, { Application, Request, Response, NextFunction } from "express";
 import cors from "cors";
 import db from "./config/config";
 import routes from './routes/index'; 
 import './models/index';
 
 class Server {
-  private async dbConnection() {
-    try {
-      await db.authenticate();
-      console.log("Conexión a la base de datos exitosa.");
-      await db.sync();
-      console.log("Base de datos sincronizada.");
-    } catch (error) {
-      console.error("Error al conectar con la base de datos:", error);
-    }
-  }
-
   private app: Application;
 
   constructor() {
@@ -23,6 +12,22 @@ class Server {
     this.config();
     this.routes();
     this.dbConnection();
+    this.errorHandling();  // Agregamos el manejo global de errores
+  }
+
+  private async dbConnection() {
+    try {
+      await db.authenticate();
+      console.log("Conexión a la base de datos exitosa.");
+      await db.sync();
+      console.log("Base de datos sincronizada.");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error al conectar con la base de datos:", error.message);
+      } else {
+        console.error("Error desconocido al conectar con la base de datos");
+      }
+    }
   }
 
   private config(): void {
@@ -33,6 +38,25 @@ class Server {
 
   private routes(): void {
     this.app.use('/api', routes);
+  }
+
+  private errorHandling(): void {
+    // Middleware global para capturar errores
+    this.app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
+      if (err instanceof Error) {
+        console.error(err.stack);
+        res.status(500).json({
+          message: 'Error interno del servidor',
+          error: err.message,
+        });
+      } else {
+        console.error("Error desconocido capturado en el middleware global");
+        res.status(500).json({
+          message: 'Error interno del servidor',
+          error: 'Error desconocido',
+        });
+      }
+    });
   }
 
   public start(): void {

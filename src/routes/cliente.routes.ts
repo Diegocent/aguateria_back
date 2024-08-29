@@ -1,15 +1,18 @@
 import { Router } from 'express';
+import {
+    crearCliente,
+    obtenerClientes,
+    obtenerClientePorId,
+    actualizarCliente,
+    eliminarCliente
+} from '../controllers/cliente.controller';
 
 const router = Router();
 
-// Ejemplo de una ruta GET
-router.get('/', (req, res) => {
-  res.send('Listado de clientes');
-});
-
-// Ejemplo de una ruta POST
-router.post('/', (req, res) => {
-  res.send('Crear un nuevo cliente');
-});
+router.post('/crear', crearCliente);
+router.get('/', obtenerClientes);
+router.get('/:id', obtenerClientePorId);
+router.put('/:id', actualizarCliente);
+router.delete('/:id', eliminarCliente);
 
 export default router;

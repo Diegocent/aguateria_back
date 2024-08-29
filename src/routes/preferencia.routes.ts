@@ -1,13 +1,18 @@
 import { Router } from 'express';
+import {
+    crearPreferencia,
+    obtenerPreferencias,
+    obtenerPreferenciaPorId,
+    actualizarPreferencia,
+    eliminarPreferencia
+} from '../controllers/preferencia.controller';
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  res.send('Listado de preferencias');
-});
-
-router.post('/', (req, res) => {
-  res.send('Crear una nueva preferencia');
-});
+router.post('/crear', crearPreferencia);
+router.get('/', obtenerPreferencias);
+router.get('/:id', obtenerPreferenciaPorId);
+router.put('/:id', actualizarPreferencia);
+router.delete('/:id', eliminarPreferencia);
 
 export default router;
