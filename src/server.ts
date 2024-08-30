@@ -12,7 +12,7 @@ class Server {
     this.config();
     this.routes();
     this.dbConnection();
-    this.errorHandling();  // Agregamos el manejo global de errores
+    this.errorHandling();  
   }
 
   private async dbConnection() {
